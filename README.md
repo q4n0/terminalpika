@@ -3,6 +3,8 @@ To copile run:
 gcc -o term term.c
 then execute with 
 ./term
+
+
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠶⠤⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠾⠷⠶⠶⣤⣈⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣠⠾⢁⣤⣴⣶⣶⣶⣶⣦⣤⡉⠛⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -18,5 +20,3 @@ then execute with
                              USER: b0urn3
                              HOST: z3t4r
                              TIME: Tue Sep 10 22:45:04 2024
-┌──(b0urn3㉿z3t4r)-[~]
-└─$
