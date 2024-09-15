@@ -8,40 +8,60 @@ is_zsh_installed() {
 # Function to install ZSH (if not installed)
 install_zsh() {
     if ! is_zsh_installed; then
-        sudo apt install zsh -y  # Adjust package manager and command for your system
+        echo -n "Installing ZSH..."
+        (sudo apt install zsh -y >/dev/null 2>&1) & spinner
     fi
 }
 
 # Function to switch to ZSH (if not the default shell)
 switch_to_zsh() {
     if [[ "$SHELL" != "/bin/zsh" ]]; then
-        chsh -s /bin/zsh "$USER"
+        echo -n "Switching to ZSH..."
+        (chsh -s /bin/zsh "$USER" >/dev/null 2>&1) & spinner
     fi
 }
 
 # Function to clone the GitHub repository
 clone_repo() {
-    git clone "$1" "$2"
+    echo -n "Cloning repository..."
+    (git clone "$1" "$2" >/dev/null 2>&1) & spinner
 }
 
 # Function to compile the C code and rename the executable
 compile_and_rename() {
-    cd "$1"
-    gcc -o term terminalpika.c
+    echo -n "Compiling C code..."
+    (cd "$1" && gcc -o term terminalpika.c >/dev/null 2>&1) & spinner
 }
 
 # Function to move the executable to /usr/bin
 move_executable() {
-    mv "$1/term" "/usr/bin/term"
+    echo -n "Moving executable to /usr/bin..."
+    (sudo mv "$1/term" "/usr/bin/term" >/dev/null 2>&1) & spinner
 }
 
 # Function to replace the zshrc file
 replace_zshrc() {
-    cp "$1/.zshrc" "$HOME/.zshrc"
+    echo -n "Replacing .zshrc..."
+    [ -f "$HOME/.zshrc" ] && cp "$HOME/.zshrc" "$HOME/.zshrc.bak"
+    (cp "$1/.zshrc" "$HOME/.zshrc" >/dev/null 2>&1) & spinner
+}
+
+# Spinner function to show progress
+spinner() {
+    local pid=$!
+    local delay=0.1
+    local spinstr='|/-\'
+    while ps -p $pid >/dev/null 2>&1; do
+        for s in $spinstr; do
+            echo -ne "\b$s"
+            sleep $delay
+        done
+    done
+    echo -ne "\b Done!\n"
 }
 
 # Main script logic
-repo_url="https://github.com/q4n0/terminalpika.tree/main"
+repo_url="https://github.com/q4n0/terminalpika.git"
 clone_dir="cloned_repo"
 
 install_zsh
@@ -53,4 +73,7 @@ move_executable "$clone_dir"
 replace_zshrc "$clone_dir"
 
 # Optional: Source the updated zshrc file
-source ~/.zshrc
+echo -n "Sourcing .zshrc..."
+(source ~/.zshrc >/dev/null 2>&1) & spinner
+
+echo "Setup complete."
