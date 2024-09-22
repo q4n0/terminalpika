@@ -5,7 +5,9 @@
 #include <sys/utsname.h>
 
 #define RESET   "\033[0m"
-#define CYAN    "\033[36m"
+#define RED     "\033[31m"
+#define YELLOW  "\033[33m"
+#define GREY    "\033[90m"
 #define WHITE   "\033[37m"
 
 char* get_current_time() {
@@ -65,8 +67,11 @@ void print_banner_and_info(const char *user, const char *host, const char *timeS
     int info_lines = sizeof(info) / sizeof(info[0]);
     int start_info = 3;  // Start the info from the 4th line of ASCII art
 
+    const char* colors[] = {RED, YELLOW, GREY};
+    int color_count = sizeof(colors) / sizeof(colors[0]);
+
     for (int i = 0; i < art_lines; i++) {
-        printf(CYAN "%-55s" RESET, ascii_art[i]);
+        printf("%s%s" RESET, colors[i % color_count], ascii_art[i]);
         if (i >= start_info && i < start_info + info_lines) {
             printf(WHITE "%-40s" RESET, info[i - start_info]);
         }
