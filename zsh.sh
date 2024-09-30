@@ -13,13 +13,5 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 #Install fzf
 sudo apt install fzf
 
-# Edit your .zshrc file
-nano ~/.zshrc
-
-# Find the line that starts with 'plugins=' and modify it to include the new plugins:
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
-
-# Save and exit the editor (Ctrl+X, then Y, then Enter in nano)
-
 # Reload your .zshrc to apply changes
 source ~/.zshrc
