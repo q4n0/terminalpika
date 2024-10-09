@@ -218,7 +218,44 @@ alias metasploit='msfconsole'
 alias set-mac='sudo macchanger -r eth0'
 alias wifi-scan='sudo airodump-ng wlan0mon'
 alias start-beef='sudo beef-xss'
+# Add the following aliases after your existing aliases (after the 'start-beef' alias)
 
+# Network security aliases
+alias myip='curl ifconfig.me'  # Show public IP address
+alias ports='netstat -tulanp'  # List all open ports
+alias listening='lsof -i -P | grep LISTEN'  # Show listening ports
+alias ssh-list='ss | grep ssh'  # List active SSH connections
+alias iptables-list='sudo iptables -L -n -v'  # Show iptables rules
+
+# File and system security aliases
+alias check-rootkits='sudo rkhunter --check'  # Check for rootkits
+alias scan-malware='sudo clamscan -r /'  # Scan system for malware
+alias files-changed='sudo find / -mtime -1 -type f -print'  # List files changed in last 24 hours
+
+# Log analysis aliases
+alias auth-log='sudo tail -f /var/log/auth.log'  # Show live authentication log
+alias syslog='sudo tail -f /var/log/syslog'  # Show live system log
+
+# Pentesting tool aliases
+alias nmap-vuln='nmap --script vuln'  # Run nmap vulnerability scan
+alias nikto-scan='nikto -h'  # Run Nikto web server scanner
+alias dirb-scan='dirb'  # Run dirb web content scanner
+alias sqlmap-basic='sqlmap --wizard'  # Run sqlmap in wizard mode
+
+# Encryption and hashing aliases
+alias encrypt-file='gpg -c'  # Encrypt a file
+alias decrypt-file='gpg -d'  # Decrypt a file
+alias hash-file='sha256sum'  # Generate SHA256 hash of a file
+
+# Network analysis aliases
+alias tcpdump-basic='sudo tcpdump -i any'  # Capture network traffic
+alias wireshark='sudo wireshark'  # Launch Wireshark
+
+# Security information aliases
+alias kernel-version='uname -a'  # Show kernel version
+alias os-version='cat /etc/os-release'  # Show OS version
+alias list-users='cat /etc/passwd'  # List all users
+alias list-sudoers='sudo cat /etc/sudoers'  # List users with sudo privileges
 # Function to start a simple HTTP server
 function http-server() {
   python3 -m http.server
