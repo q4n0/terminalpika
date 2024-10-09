@@ -223,3 +223,4 @@ alias start-beef='sudo beef-xss'
 function http-server() {
   python3 -m http.server
 }
+term
