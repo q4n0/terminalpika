@@ -120,23 +120,20 @@ fi
 
 # Configure custom prompt
 configure_prompt() {
-    prompt_symbol=𓆲 # Default prompt symbol
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            PROMPT=$'%F{240}┌──%F{67}%n'$prompt_symbol$'%m%F{240}-[%F{178}%~%F{240}]\n>> %f'
+            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
             ;;
         oneline)
-            PROMPT=$'%F{240}┌──%F{67}%n'$prompt_symbol$'%m%F{240}-[%F{178}%~%F{240}] >> %f'
+            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
             RPROMPT=
             ;;
         backtrack)
-            PROMPT=$'%F{240}┌──%F{67}%n'$prompt_symbol$'%m%F{240}-[%F{178}%~%F{240}] >> %f'
+            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
             RPROMPT=
             ;;
     esac
-    unset prompt_symbol
 }
-
 # Kali config variables (do not modify)
 PROMPT_ALTERNATIVE='twoline'
 NEWLINE_BEFORE_PROMPT='no'
