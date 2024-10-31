@@ -120,19 +120,7 @@ fi
 
 # Configure custom prompt
 configure_prompt() {
-    case "$PROMPT_ALTERNATIVE" in
-        twoline)
-            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
-            ;;
-        oneline)
-            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
-            RPROMPT=
-            ;;
-        backtrack)
-            PROMPT='%F{cyan}[%F{magenta}ソロックス%F{cyan}𓆲%F{green}g4mb1t%F{cyan}]%F{green}>%f '
-            RPROMPT=
-            ;;
-    esac
+    PROMPT=$'%F{green}┌──%F{236}[%F{61}ソロックス%F{236}𓆲%F{25}g4mb1t%F{236}]-[%F{25}%~%F{236}]\n%F{green}>> %f'
 }
 # Kali config variables (do not modify)
 PROMPT_ALTERNATIVE='twoline'
